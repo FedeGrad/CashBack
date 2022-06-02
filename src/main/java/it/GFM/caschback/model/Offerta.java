@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Offerta {
-
+//dd
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
