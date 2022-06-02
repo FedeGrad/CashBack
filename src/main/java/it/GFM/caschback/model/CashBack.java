@@ -3,6 +3,7 @@ package it.GFM.caschback.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,9 +30,9 @@ public class CashBack {
 	@Setter(value = AccessLevel.NONE)
 	private int id;
 	
-	@OneToMany(mappedBy = "cashBack")
+	@OneToMany(mappedBy = "cashBack",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<Acquisto> acquisti;
-	
+
 	private BigDecimal prezzo;
 	
 	private float percentuale;
