@@ -30,7 +30,7 @@ public class Utente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(value = AccessLevel.NONE)
-	long id;
+	private Long id;
 	private String username;
 	private String password;
 	@JsonIgnore
