@@ -28,7 +28,6 @@ public class CashBack {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(value = AccessLevel.NONE)
 	private int id;
-	
 	@OneToMany(mappedBy = "cashBack")
 	private List<Acquisto> acquisti;
 	
