@@ -34,9 +34,6 @@ public class Acquisto {
 	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	@JoinColumn(name = "id_utente")
 	private Utente IdUtente;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_casch_back")
-	private CashBack caschBack;
 	
 	
 
