@@ -29,14 +29,14 @@ public class Acquisto {
 	@Setter(value = AccessLevel.NONE)
 	private Long id;
 	@OneToMany(mappedBy = "acquisto",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List <Offerta> idOfferta;
+	private List <Offerta> offerta;
 	private LocalDate dataAcquisto;
 	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	@JoinColumn(name = "id_utente")
-	private Utente IdUtente;
+	private Utente utente;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_casch_back")
-	private CashBack caschBack;
+	@JoinColumn(name = "id_cash_back")
+	private CashBack cashBack;
 	
 	
 

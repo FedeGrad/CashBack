@@ -29,7 +29,7 @@ public class Profilo {
 	private Utente utente;
 	private String nome;
 	private String cognome;
-	private String email = utente.getUsername();
+	private String email;
 	private String indirizzo;
 	private String citta;
 

@@ -26,7 +26,7 @@ public class Pagamento {
 	private Long id;
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "id_utente")
-	private Utente idUtente;
+	private Utente utente;
 	
 	private EPagamento tipo;
 	
