@@ -1,5 +1,5 @@
-utente(username, password) 
-username è l’email profilo(username,email,cognome,nome,indirizzo,citta) 
+utente(username, password) username è l’email 
+profilo(username,email,cognome,nome,indirizzo,citta) 
 preferenze(username, viaggi, casa, libri, cosmetici, ristoranti, alberghi) 
 pagamenti(utente, tipo,iban,paypal_user,numero_carta) 
 tipo=carta di credito, conto corrente, pay pal 
