@@ -16,71 +16,63 @@ import it.GFM.cashback.error.NotFoundException;
 
 @Service
 public class UtenteService {
-	
+
 	@Autowired
 	UtenteRepository utenteRepository;
-	
-	
-	
-	
+
 	public void insertUtente(InsertUtenteRequestDTO dto) {
 		Utente utente = new Utente();
 		BeanUtils.copyProperties(dto, utente);
 		utente.setPassword(BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
 		utenteRepository.save(utente);
 	}
-	
+
 	public void updateUtente(UpdateUtenteRequestDTO dto) throws NotFoundException {
-		if(utenteRepository.existsById(dto.getId())) {
+		if (utenteRepository.existsById(dto.getId())) {
 			Utente utente = utenteRepository.findById(dto.getId()).get();
 			BeanUtils.copyProperties(dto, utente);
 			utente.setPassword(BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
 			utenteRepository.save(utente);
-		}
-		else {
+		} else {
 			throw new NotFoundException("utente non esistente");
 		}
-		
+
 	}
-	
+
 	public void deleteUtente(Long id) throws NotFoundException {
-		if(utenteRepository.existsById(id)) {
+		if (utenteRepository.existsById(id)) {
 			utenteRepository.deleteById(id);
-		}
-		else {
+		} else {
 			throw new NotFoundException("utente non esistente");
 		}
 	}
-	
+
 	public FindAllUtentiResponseDTO findAllUtenti() {
 		FindAllUtentiResponseDTO dto = new FindAllUtentiResponseDTO();
-		List<Utente> listaUtente = (List)utenteRepository.findAll();
-		if(listaUtente.size()>0) {
+		List<Utente> listaUtente = utenteRepository.findAll();
+		if (listaUtente.size() > 0) {
 			dto.setUtentiTrovati(listaUtente.size());
 			dto.setElencoUtenti(listaUtente);
 			return dto;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
-	
+
 	public Utente findUtenteUsername(String username) throws NotFoundException {
-		if(utenteRepository.existsByUsername(username)) {
+		if (utenteRepository.existsByUsername(username)) {
 			Utente utente = utenteRepository.findByUsername(username);
 			return utente;
-		}
-		else {
+		} else {
 			throw new NotFoundException("utente non trovato");
 		}
 	}
-	
+
 	public Utente findById(Long id) throws NotFoundException {
-		if(utenteRepository.existsById(id)) {
+		if (utenteRepository.existsById(id)) {
 			Utente utente = utenteRepository.findById(id).get();
 			return utente;
-		}
-		else {
+		} else {
 			throw new NotFoundException("utente non trovato");
 		}
 	}

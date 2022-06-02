@@ -7,10 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import it.GFM.caschback.model.Profilo;
 
 public interface ProfiloRepository extends JpaRepository<Profilo, Long> {
-	
+
+	public Profilo findByEmail(String email);
+	public Profilo existsByEmail(String email);
+	public List<Profilo> findByNome(String nome);
 	public List<Profilo> findByNomeContaining(String nome);
+	public List<Profilo> findByCognome(String cognome);
 	public List<Profilo> findByCognomeContaining(String cognome);
-	public Boolean existsByNomeContaining(String nome);
-	public Boolean existsByCognomeContaining(String cognome);
+	public boolean existsByNome(String nome);
+	public boolean existsByNomeContaining(String nome);
+	public boolean existsByCognome(String cognome);
+	public boolean existsByCognomeContaining(String cognome);
+	public List<Profilo> findByUtente(String username);
 
 }
