@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Preferenza {
 	//ok
-	//ok
+	//okd
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
