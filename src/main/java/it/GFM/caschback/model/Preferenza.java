@@ -20,17 +20,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Preferenza {
-	//ok3
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private List<String> username = new ArrayList<String>();
-	private List<String> viaggi = new ArrayList<String>();
-	private List<String> casa = new ArrayList<String>();
-	private List<String> libri = new ArrayList<String>();
-	private List<String> cosmetici = new ArrayList<String>();
-	private List<String> ristoranti = new ArrayList<String>();
-	private List<String> alberghi = new ArrayList<String>();
+	private String username;
+	private List<ETipo> viaggi = new ArrayList<ETipo>();
+	private List<ETipo> casa = new ArrayList<ETipo>();
+	private List<ETipo> libri = new ArrayList<ETipo>();
+	private List<ETipo> cosmetici = new ArrayList<ETipo>();
+	private List<ETipo> ristoranti = new ArrayList<ETipo>();
+	private List<ETipo> alberghi = new ArrayList<ETipo>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username_utente")
