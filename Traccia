@@ -1,0 +1,8 @@
+utente(username, password) username è l’email 
+profilo(username,email,cognome,nome,indirizzo,citta) 
+preferenze(username, viaggi, casa, libri, cosmetici, ristoranti, alberghi) 
+pagamenti(utente, tipo,iban,paypal_user,numero_carta) 
+tipo=carta di credito, conto corrente, pay pal 
+offerte(id,tipo, descrizione, costo,data_inizio_validita,data_fine_validita,cashback) 
+tipo è viaggi, casa, libri, cosmetici, ristoranti, alberghi 
+acquisto(id,id_offerta,data_acquisto,utente) cash_back(id_acquisto,prezzo,percentuale)
