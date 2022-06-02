@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Acquisto {
+	//boh
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
