@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
@@ -34,5 +37,10 @@ public class Utente {
 	private List<Profilo> profili = new ArrayList<Profilo>();
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<Pagamento> pagamenti = new ArrayList<Pagamento>();
+	@ManyToMany
+	@JoinTable(name = "preferenze", 
+	joinColumns = @JoinColumn(name = "id_utente"), 
+	inverseJoinColumns = @JoinColumn(name = "id_offerta"))
+	private List<Offerta> offerte = new ArrayList<Offerta>();
 
 }
