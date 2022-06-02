@@ -8,4 +8,8 @@ public enum ETipo {
 	COSMETICO,
 	RISTORANTE,
 	ALBERGO;
+	
+	private ETipo () {
+	}
+	
 }

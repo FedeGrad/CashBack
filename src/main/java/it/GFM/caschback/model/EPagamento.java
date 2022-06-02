@@ -6,5 +6,8 @@ public enum EPagamento {
 	CONTO_CORRENTE,
 	PAY_PAL;
 	
+	private EPagamento() {
+	}
+	
 
 }
