@@ -19,23 +19,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pagamento {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(value = AccessLevel.NONE)
 	private Long id;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_utente")
 	private Utente utente;
-	
 	private EPagamento tipo;
-	
 	private String iban;
-	
 	private String paypalUser;
-	
 	private Long numeroCarta;
-	
-	
 
 }

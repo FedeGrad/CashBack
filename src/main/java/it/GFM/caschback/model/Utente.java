@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,22 +26,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Utente {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(value = AccessLevel.NONE)
 	long id;
 	private String username;
 	private String password;
+	@JsonIgnore
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<Acquisto> acquisti = new ArrayList<Acquisto>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<Profilo> profili = new ArrayList<Profilo>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<Pagamento> pagamenti = new ArrayList<Pagamento>();
+	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "preferenze", 
-	joinColumns = @JoinColumn(name = "id_utente"), 
+	@JoinTable(name = "preferenze", joinColumns = @JoinColumn(name = "id_utente"), 
 	inverseJoinColumns = @JoinColumn(name = "id_offerta"))
 	private List<Offerta> offerte = new ArrayList<Offerta>();
 

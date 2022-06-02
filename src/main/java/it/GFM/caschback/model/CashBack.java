@@ -1,6 +1,7 @@
 package it.GFM.caschback.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,5 +31,7 @@ public class CashBack {
 	private List<Acquisto> acquisti;
 	private BigDecimal prezzo;
 	private float percentuale;
+	@OneToMany(mappedBy = "cashBack")
+	private List<Offerta> offerte = new ArrayList<Offerta>();
 	
 }
