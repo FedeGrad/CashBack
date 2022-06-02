@@ -12,25 +12,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Acquisto {
-	//boh
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Setter(value = AccessLevel.NONE)
 	private Long id;
-	
-	@OneToMany(mappedBy = "IdAcquisto",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+	@OneToMany(mappedBy = "acquisto",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List <Offerta> idOfferta;
-	
 	private LocalDate dataAcquisto;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	@JoinColumn(name = "id_utente")
 	private Utente IdUtente;
 	
