@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import it.GFM.cashback.dto.AcquistoDTO;
+import it.GFM.cashback.dto.AcquistoUpdateDTO;
 import it.GFM.cashback.exception.ElementAlreadyPresentException;
 import it.GFM.cashback.model.Acquisto;
 import it.GFM.cashback.model.CashBack;
@@ -30,8 +31,6 @@ public class AcquistoService {
 	@Autowired
 	AcquistoRepository acquistoRepo;
 	@Autowired
-	AcquistoService acquistoServ;
-	@Autowired
 	OffertaRepository offertaRepo;
 	@Autowired
 	UtenteRepository utenteRepo;
@@ -39,7 +38,7 @@ public class AcquistoService {
 	CashBackRepository cashRepo;
 
 	/**
-	 * Recupera tutti gli Indirizzi Legali
+	 * Recupera tutti gli acquisti
 	 * 
 	 * @deprecated
 	 * @return
@@ -49,13 +48,23 @@ public class AcquistoService {
 	}
 
 	/**
-	 * Recupera tutti gli Indirizzi Legali, paginati
+	 * Recupera tutti gli acqusiti, paginati
 	 * 
 	 * @param page
 	 * @return
 	 */
-	public Page<Acquisto> geAcquistiPaginati(Pageable page) {
+	public Page<Acquisto> getAcquistiPaginati(Pageable page) {
 		return (Page<Acquisto>) acquistoRepo.findAll(page);
+	}
+	
+	/**
+	 * Recupera tutti gli acqusiti, dalla data
+	 * 
+	 * @param page
+	 * @return
+	 */
+	public Page<Acquisto> getAcquistiByData(LocalDate dataAcquisto, Pageable page) {
+		return (Page<Acquisto>) acquistoRepo.findByDataAcquisto(dataAcquisto, page);
 	}
 	
 	/**
@@ -69,12 +78,12 @@ public class AcquistoService {
 	}
 
 	/**
-	 * Inserisce un Indirizzo Legale
+	 * Inserisce un acquisto
 	 * 
 	 * @param dto
 	 * @throws ElementAlreadyPresentException
 	 */
-	public void inserisciAcquisto(AcquistoDTO dto){
+	public void insertAcquisto(AcquistoDTO dto){
 			Acquisto acquisto = new Acquisto();
 			acquisto.setDataAcquisto(LocalDate.now());
 			if(dto.isOfferta()==true) {
@@ -93,38 +102,47 @@ public class AcquistoService {
 	}
 
 	/**
-	 * Modifica un Indirizzo Legale
+	 * Modifica un acquisto
 	 * 
 	 * @param dto
 	 */
-	public void modificaIndirizzoLegale(IndirizzoModificaDTO dto) {
-		if (indiLegRepo.existsById(dto.getIdIndirizzo())) {
-			IndirizzoLegale indirizzo = indiLegRepo.findById(dto.getIdIndirizzo()).get();
-			BeanUtils.copyProperties(dto, indirizzo);
-			Comune comuneTrovato = comuneServ.associaComune(dto.getLocalita());
-			indirizzo.setComune(comuneTrovato);
-			comuneTrovato.getIndirizziLegali().add(indirizzo);
-			indiLegRepo.save(indirizzo);
-			log.info("l'indirizzo Legale è stato modificato");
+	public void updateAcquisto(AcquistoUpdateDTO dto) {
+		if (acquistoRepo.existsById(dto.getIdAcquisto())) {
+			Acquisto acquisto = acquistoRepo.findById(dto.getIdAcquisto()).get();
+			if(dto.isOfferta()==true) {
+				Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
+				acquisto.getOfferte().add(offerta);
+				offerta.setAcquisto(acquisto);
+			}
+			if(dto.getIdCashback() != null) {
+				CashBack cashBack = cashRepo.findById(dto.getIdCashback()).get();
+				acquisto.setCashBack(cashBack);
+				cashBack.getAcquisti().add(acquisto);
+			}
+			if(dto.getIdUtente() != null) {
+				Utente utente = utenteRepo.findById(dto.getIdUtente()).get();
+				acquisto.setUtente(utente);
+				utente.getAcquisti().add(acquisto);
+			}
+			acquistoRepo.save(acquisto);
+			log.info("L'acquisto è stato modificato");
 		} else {
-			throw new NotFoundException("L'Indirizzo Legale n°" + dto.getIdIndirizzo() + " non è presente nel sistema");
+			throw new NotFoundException("L'acquisto id n°" + dto.getIdAcquisto() + " non è presente nel sistema");
 		}
 	}
 
 	/**
-	 * Elimina un Indirizzo Legale
+	 * Elimina un acquisto
 	 * 
 	 * @param id
 	 */
-	public void eliminaIndirizzoLegale(Long id) {
-		if (indiLegRepo.existsById(id)) {
-			indiLegRepo.deleteById(id);
-			log.info("L'indirizzo Legale n°" + id + " è stato eliminato");
+	public void deleteAcquisto(Long id) {
+		if (acquistoRepo.existsById(id)) {
+			acquistoRepo.deleteById(id);
+			log.info("L'acquisto id n°" + id + " è stato eliminato");
 		} else {
-			throw new NotFoundException("L'indirizzo Legale n°" + id + " non presente nel sistema");
+			throw new NotFoundException("L'acquisto id n°" + id + " non presente nel sistema");
 		}
 	}
-
-	
 
 }
