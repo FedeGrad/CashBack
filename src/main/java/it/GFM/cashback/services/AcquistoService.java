@@ -17,6 +17,7 @@ import it.GFM.cashback.exception.ElementNotAvaible;
 import it.GFM.cashback.exception.NotFoundException;
 import it.GFM.cashback.model.Acquisto;
 import it.GFM.cashback.model.CashBack;
+import it.GFM.cashback.model.EStato;
 import it.GFM.cashback.model.Offerta;
 import it.GFM.cashback.model.Utente;
 import it.GFM.cashback.repository.AcquistoRepository;
@@ -92,7 +93,7 @@ public class AcquistoService {
 		BeanUtils.copyProperties(dto, acquisto);
 		if(offertaRepo.existsById(dto.getIdOfferta())) {
 			Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
-			if(offerta.getStatoOfferta().equals("DISPONIBILE")) {
+			if(offerta.getStatoOfferta().equals(EStato.DISPONIBILE)) {
 				acquisto.getOfferte().add(offerta);
 				offerta.setAcquisto(acquisto);
 			}
