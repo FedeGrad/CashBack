@@ -93,6 +93,7 @@ public class AcquistoService {
 		BeanUtils.copyProperties(dto, acquisto);
 		if(offertaRepo.existsById(dto.getIdOfferta())) {
 			Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
+			//da verificare riga 97 
 			if(offerta.getStatoOfferta().equals(EStato.DISPONIBILE)) {
 				acquisto.getOfferte().add(offerta);
 				offerta.setAcquisto(acquisto);
@@ -138,6 +139,7 @@ public class AcquistoService {
 			BeanUtils.copyProperties(dto, acquisto);
 			if(offertaRepo.existsById(dto.getIdOfferta())) {
 				Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
+				//alternativa di riga 97 da provare anche questa
 				if(offerta.getStatoOfferta().equals("DISPONIBILE")) {
 					acquisto.getOfferte().add(offerta);
 					offerta.setAcquisto(acquisto);
