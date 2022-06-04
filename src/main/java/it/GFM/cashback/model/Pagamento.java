@@ -2,6 +2,8 @@ package it.GFM.cashback.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,7 @@ public class Pagamento {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_utente")
 	private Utente utente;
+	@Enumerated(EnumType.STRING)
 	private EPagamento tipo;
 	private String iban;
 	private String paypalUser;

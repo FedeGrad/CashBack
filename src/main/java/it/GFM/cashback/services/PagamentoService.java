@@ -57,9 +57,12 @@ public class PagamentoService {
 		}
 	}
 	
-	public void deletePagamento(Long id) {
+	public void deletePagamento(Long id) throws NotFoundException {
 		if(pagamentoRepository.existsById(id)) {
 			pagamentoRepository.deleteById(id);
+		}
+		else {
+			throw new NotFoundException("Pagamento non trovato");
 		}
 	}
 	
