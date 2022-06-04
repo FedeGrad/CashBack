@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+
 
 import it.GFM.cashback.dto.AcquistoDTO;
 import it.GFM.cashback.dto.AcquistoUpdateDTO;
 import it.GFM.cashback.exception.ElementAlreadyPresentException;
+import it.GFM.cashback.exception.ElementNotAvaible;
+import it.GFM.cashback.exception.NotFoundException;
 import it.GFM.cashback.model.Acquisto;
 import it.GFM.cashback.model.CashBack;
 import it.GFM.cashback.model.Offerta;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class AcquistoService {
-	
+
 	@Autowired
 	AcquistoRepository acquistoRepo;
 	@Autowired
@@ -56,7 +58,7 @@ public class AcquistoService {
 	public Page<Acquisto> getAcquistiPaginati(Pageable page) {
 		return (Page<Acquisto>) acquistoRepo.findAll(page);
 	}
-	
+
 	/**
 	 * Recupera tutti gli acqusiti, dalla data
 	 * 
@@ -66,7 +68,7 @@ public class AcquistoService {
 	public Page<Acquisto> getAcquistiByData(LocalDate dataAcquisto, Pageable page) {
 		return (Page<Acquisto>) acquistoRepo.findByDataAcquisto(dataAcquisto, page);
 	}
-	
+
 	/**
 	 * 
 	 * @param idUtente
@@ -81,62 +83,99 @@ public class AcquistoService {
 	 * Inserisce un acquisto
 	 * 
 	 * @param dto
+	 * @throws NotFoundException 
+	 * @throws ElementNotAvaible 
 	 * @throws ElementAlreadyPresentException
 	 */
-	public void insertAcquisto(AcquistoDTO dto){
-			Acquisto acquisto = new Acquisto();
-			acquisto.setDataAcquisto(LocalDate.now());
-			if(dto.isOfferta()==true) {
-				Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
+	public void insertAcquisto(AcquistoDTO dto) throws NotFoundException, ElementNotAvaible{
+		Acquisto acquisto = new Acquisto();
+		BeanUtils.copyProperties(dto, acquisto);
+		if(offertaRepo.existsById(dto.getIdOfferta())) {
+			Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
+			if(offerta.getStatoOfferta().equals("DISPONIBILE")) {
 				acquisto.getOfferte().add(offerta);
 				offerta.setAcquisto(acquisto);
 			}
+			else {
+				throw new ElementNotAvaible("Offerta non disponibile");
+			}
+		}
+		else {
+			throw new NotFoundException("Offerta non esistente");
+		}
+		if(cashRepo.existsById(dto.getIdCashback())) {
 			CashBack cashBack = cashRepo.findById(dto.getIdCashback()).get();
 			acquisto.setCashBack(cashBack);
 			cashBack.getAcquisti().add(acquisto);
+		}
+		else {
+			throw new NotFoundException("Cash back non esistente");
+		}
+		if(utenteRepo.existsById(dto.getIdUtente())) {
 			Utente utente = utenteRepo.findById(dto.getIdUtente()).get();
 			acquisto.setUtente(utente);
 			utente.getAcquisti().add(acquisto);
-			acquistoRepo.save(acquisto);
-			log.info("L'acquisto è stato salvato");
+		}
+		else {
+			throw new NotFoundException("utente non esistente");
+		}
+
+		acquistoRepo.save(acquisto);
+		log.info("L'acquisto è stato salvato");
 	}
 
 	/**
 	 * Modifica un acquisto
 	 * 
 	 * @param dto
+	 * @throws ElementNotAvaible 
+	 * @throws NotFoundException 
 	 */
-	public void updateAcquisto(AcquistoUpdateDTO dto) {
+	public void updateAcquisto(AcquistoUpdateDTO dto) throws ElementNotAvaible, NotFoundException {
 		if (acquistoRepo.existsById(dto.getIdAcquisto())) {
 			Acquisto acquisto = acquistoRepo.findById(dto.getIdAcquisto()).get();
-			if(dto.isOfferta()==true) {
+			BeanUtils.copyProperties(dto, acquisto);
+			if(offertaRepo.existsById(dto.getIdOfferta())) {
 				Offerta offerta = offertaRepo.findById(dto.getIdOfferta()).get();
-				acquisto.getOfferte().add(offerta);
-				offerta.setAcquisto(acquisto);
+				if(offerta.getStatoOfferta().equals("DISPONIBILE")) {
+					acquisto.getOfferte().add(offerta);
+					offerta.setAcquisto(acquisto);
+				}
+				else {
+					throw new ElementNotAvaible("Offerta non disponibile");
+				}
 			}
-			if(dto.getIdCashback() != null) {
+			else {
+				throw new NotFoundException("Offerta non esistente");
+			}
+			if(cashRepo.existsById(dto.getIdCashback())) {
 				CashBack cashBack = cashRepo.findById(dto.getIdCashback()).get();
 				acquisto.setCashBack(cashBack);
 				cashBack.getAcquisti().add(acquisto);
 			}
-			if(dto.getIdUtente() != null) {
+			else {
+				throw new NotFoundException("Cash back non esistente");
+			}
+			if(utenteRepo.existsById(dto.getIdUtente())) {
 				Utente utente = utenteRepo.findById(dto.getIdUtente()).get();
 				acquisto.setUtente(utente);
 				utente.getAcquisti().add(acquisto);
 			}
+			else {
+				throw new NotFoundException("utente non esistente");
+			}
+
 			acquistoRepo.save(acquisto);
-			log.info("L'acquisto è stato modificato");
-		} else {
-			throw new NotFoundException("L'acquisto id n°" + dto.getIdAcquisto() + " non è presente nel sistema");
-		}
+			}
 	}
 
 	/**
 	 * Elimina un acquisto
 	 * 
 	 * @param id
+	 * @throws NotFoundException 
 	 */
-	public void deleteAcquisto(Long id) {
+	public void deleteAcquisto(Long id) throws NotFoundException {
 		if (acquistoRepo.existsById(id)) {
 			acquistoRepo.deleteById(id);
 			log.info("L'acquisto id n°" + id + " è stato eliminato");

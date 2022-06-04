@@ -79,5 +79,11 @@ public class GestioneErroriControllerAdvice {
 	public ResponseEntity wrongInserData(WrongInsertException ex) {
 		return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 	}
+	
+	@ExceptionHandler(ElementNotAvaible.class)
+	public ResponseEntity elementNotAvaible(ElementNotAvaible ena) {
+		return new ResponseEntity("si è verificato un errore " + ena.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+		
+	}
 
 }

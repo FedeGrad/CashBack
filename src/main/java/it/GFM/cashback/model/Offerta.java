@@ -33,6 +33,7 @@ public class Offerta {
 	private double costo;
 	private LocalDate dataInizioValidita;
 	private LocalDate dataFineValidita;
+	private EStato statoOfferta;
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_cashBack")
 	private CashBack cashBack;
