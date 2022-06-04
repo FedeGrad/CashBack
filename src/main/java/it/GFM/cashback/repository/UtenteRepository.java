@@ -10,8 +10,9 @@ import it.GFM.cashback.model.Utente;
 
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	
-	@Query(value = "", nativeQuery = true)
-	public List<Utente> findByAcquisti(String acquisto);
+	@Query(value = "SELECT * Utente JOIN Acquisto ON Utente.id = Acquisto.id_utente "
+			+ "WHERE Acquisto.id = ?1", nativeQuery = true)
+	public List<Utente> findByAcquisti(Long idAcquisto);
 	public Utente findByUsername(String username);
 	public boolean existsByUsername(String username);
 	public Long deleteByUsername(String username);
