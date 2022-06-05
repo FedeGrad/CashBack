@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.GFM.cashback.dto.AcquistoDTO;
-import it.GFM.cashback.dto.AcquistoUpdateDTO;
+import it.GFM.cashback.dto.UpdateAcquistoRequestDTO;
 import it.GFM.cashback.dto.DataDTO;
 import it.GFM.cashback.exception.ElementNotAvaible;
 import it.GFM.cashback.exception.NotFoundException;
@@ -93,7 +93,7 @@ public class AcquistoController {
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
 	@PutMapping
-	public ResponseEntity modificaAcquisto(@Valid @RequestBody AcquistoUpdateDTO modificaDTO)
+	public ResponseEntity modificaAcquisto(@Valid @RequestBody UpdateAcquistoRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
 		acquistoServ.updateAcquisto(modificaDTO);
 		return ResponseEntity.ok("Acquisto modificato");

@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.GFM.cashback.dto.AcquistoDTO;
-import it.GFM.cashback.dto.AcquistoUpdateDTO;
+import it.GFM.cashback.dto.UpdateAcquistoRequestDTO;
 import it.GFM.cashback.dto.DataDTO;
 import it.GFM.cashback.exception.ElementAlreadyPresentException;
 import it.GFM.cashback.exception.ElementNotAvaible;
@@ -128,7 +128,7 @@ public class AcquistoService {
 	 * @throws ElementNotAvaible
 	 * @throws NotFoundException
 	 */
-	public void updateAcquisto(AcquistoUpdateDTO dto) throws ElementNotAvaible, NotFoundException {
+	public void updateAcquisto(UpdateAcquistoRequestDTO dto) throws ElementNotAvaible, NotFoundException {
 		if (acquistoRepo.existsById(dto.getIdAcquisto())) {
 			Acquisto acquisto = acquistoRepo.findById(dto.getIdAcquisto()).get();
 			BeanUtils.copyProperties(dto, acquisto);

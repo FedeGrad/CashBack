@@ -41,7 +41,7 @@ public class PagamentoController {
 	}
 	
 	
-	@Operation(summary = "inserisce un Pagamento nel sistema", description = "")
+	@Operation(summary = "inserisce un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento inserito correttamente")
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
 	// @SecurityRequirement(name = "bearerAuth")
@@ -55,7 +55,7 @@ public class PagamentoController {
 	
 	
 	
-	@Operation(summary = "Modifica un Pagamento nel sistema", description = "")
+	@Operation(summary = "Modifica un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento modificato")
 	@ApiResponse(responseCode = "404", description = "Pagamento non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
@@ -70,7 +70,7 @@ public class PagamentoController {
 	
 	
 	
-	@Operation(summary = "Elimina un Pagamento nel sistema", description = "")
+	@Operation(summary = "Elimina un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento eliminato")
 	@ApiResponse(responseCode = "404", description = "Pagamento non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
