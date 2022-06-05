@@ -15,7 +15,6 @@ import it.GFM.cashback.model.Utente;
 import it.GFM.cashback.repository.PagamentoRepository;
 import it.GFM.cashback.repository.UtenteRepository;
 
-
 @Service
 public class PagamentoService {
 	@Autowired
@@ -26,60 +25,52 @@ public class PagamentoService {
 	public void insertPagamento(InsertPagamentoRequestDTO dto) throws NotFoundException {
 		Pagamento pagamento = new Pagamento();
 		BeanUtils.copyProperties(dto, pagamento);
-		if(utenteRepository.existsById(dto.getIdUtente())) {
+		if (utenteRepository.existsById(dto.getIdUtente())) {
 			Utente utente = utenteRepository.findById(dto.getIdUtente()).get();
 			pagamento.setUtente(utente);
 			utente.getPagamenti().add(pagamento);
 			pagamentoRepository.save(pagamento);
 
-		}
-		else {
+		} else {
 			throw new NotFoundException("utente non trovato");
 		}
 	}
 
 	public void updatePagamento(UpdatePagamentoRequestDTO dto) throws NotFoundException {
-		if(pagamentoRepository.existsById(dto.getIdPagamento())) {
+		if (pagamentoRepository.existsById(dto.getIdPagamento())) {
 			Pagamento pagamento = pagamentoRepository.findById(dto.getIdPagamento()).get();
 			BeanUtils.copyProperties(dto, pagamento);
-			if(utenteRepository.existsById(dto.getIdUtente())) {
+			if (utenteRepository.existsById(dto.getIdUtente())) {
 				Utente utente = utenteRepository.findById(dto.getIdUtente()).get();
 				pagamento.setUtente(utente);
 				utente.getPagamenti().add(pagamento);
 				pagamentoRepository.save(pagamento);
-			}
-			else {
+			} else {
 				throw new NotFoundException("utente non trovato");
 			}
-		}
-		else {
+		} else {
 			throw new NotFoundException("pagamento non trovato");
 		}
 	}
-	
+
 	public void deletePagamento(Long id) throws NotFoundException {
-		if(pagamentoRepository.existsById(id)) {
+		if (pagamentoRepository.existsById(id)) {
 			pagamentoRepository.deleteById(id);
-		}
-		else {
+		} else {
 			throw new NotFoundException("Pagamento non trovato");
 		}
 	}
-	
-	
-	public  FindAllPagamentiResponseDTO findAllPagamenti() {
+
+	public FindAllPagamentiResponseDTO findAllPagamenti() {
 		FindAllPagamentiResponseDTO dto = new FindAllPagamentiResponseDTO();
-		List <Pagamento> listaPagamento = pagamentoRepository.findAll();
-		if(listaPagamento.size()>0) {
+		List<Pagamento> listaPagamento = pagamentoRepository.findAll();
+		if (listaPagamento.size() > 0) {
 			dto.setPagamentiTrovati(listaPagamento.size());
 			dto.setElencoPagamenti(listaPagamento);
 			return dto;
-		}
-		else {
+		} else {
 			return null;
-		}	
-	}
-	
+		}
 	}
 
-
+}
