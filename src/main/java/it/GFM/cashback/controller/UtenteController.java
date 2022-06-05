@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,6 +26,7 @@ import it.GFM.cashback.exception.WrongInsertException;
 import it.GFM.cashback.services.UtenteService;
 
 @Controller
+@RequestMapping("/utente")
 public class UtenteController {
 
 	@Autowired
@@ -36,7 +38,7 @@ public class UtenteController {
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
 //	@SecurityRequirement(name = "bearerAuth")
 //	@PreAuthorize("isAuthenticated()")
-	@GetMapping
+	@GetMapping("/")
 	public ResponseEntity getAllUtenti() throws NotFoundException {
 		return ResponseEntity.ok(utenteService.findAllUtenti());
 	}
@@ -68,7 +70,7 @@ public class UtenteController {
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
-	@PostMapping
+	@PostMapping("/")
 	public ResponseEntity inserisciUtente(@Valid @RequestBody InsertUtenteRequestDTO  dto)
 			throws WrongInsertException,NotFoundException, ElementAlreadyPresentException {
 		utenteService.insertUtente(dto);
@@ -82,7 +84,7 @@ public class UtenteController {
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
-	@PutMapping
+	@PutMapping("/")
 	public ResponseEntity modificaUtente(@Valid @RequestBody UpdateUtenteRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
 		utenteService.updateUtente(modificaDTO);

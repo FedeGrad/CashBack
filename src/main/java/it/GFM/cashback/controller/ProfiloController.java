@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,6 +25,7 @@ import it.GFM.cashback.exception.WrongInsertException;
 import it.GFM.cashback.services.ProfiloService;
 
 @Controller
+@RequestMapping("/profilo")
 public class ProfiloController {
 
 	@Autowired
@@ -34,7 +36,7 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "404", description = "Nessun Profilo trovato")
 //	@SecurityRequirement(name = "bearerAuth")
 //	@PreAuthorize("isAuthenticated()")
-	@GetMapping
+	@GetMapping("/")
 	public ResponseEntity getAllProfili() {
 		return ResponseEntity.ok(profiloService.findAllProfili());
 	}
@@ -68,7 +70,7 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
-	@PostMapping
+	@PostMapping("/")
 	public ResponseEntity inserisciProfilo(@Valid @RequestBody InsertProfiloRequestDTO  dto)
 			throws WrongInsertException,NotFoundException {
 		profiloService.insertProfilo(dto);
@@ -83,7 +85,7 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
-	@PutMapping
+	@PutMapping("/")
 	public ResponseEntity modificaProfilo(@Valid @RequestBody UpdateProfiloRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
 		profiloService.updateProfilo(modificaDTO);
@@ -97,7 +99,7 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
 	// @SecurityRequirement(name = "bearerAuth")
 	// @PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/eliminaprofilo/{id}")
 	public ResponseEntity eliminaProfilo(@PathVariable Long id) throws NotFoundException {
 		profiloService.deleteProfilo(id);
 		return ResponseEntity.ok("Profilo eliminato");

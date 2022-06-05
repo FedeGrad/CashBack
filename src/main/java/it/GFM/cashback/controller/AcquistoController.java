@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,19 +28,19 @@ import it.GFM.cashback.repository.AcquistoRepository;
 import it.GFM.cashback.services.AcquistoService;
 
 @Controller
+@RequestMapping("/acquisto")
 public class AcquistoController {
 
 	@Autowired
 	AcquistoService acquistoServ;
-	@Autowired
-	AcquistoRepository acquistoRepo;
-
+	
+	
 	@Operation(summary = "Recupera tutti gli acquisti presenti nel sistema", description = "")
 	@ApiResponse(responseCode = "200", description = "Acquisti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Acquisto trovato")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("isAuthenticated()")
-	@GetMapping
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/")
 	public ResponseEntity getAllAcquisti() {
 		return ResponseEntity.ok(acquistoServ.getAllAcquisti());
 	}
@@ -57,8 +58,8 @@ public class AcquistoController {
 	@Operation(summary = "Recupera gli Acquisti per data di inserimento", description = "")
 	@ApiResponse(responseCode = "200", description = "Acquisti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Acquisto trovato")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/getAcquistiByDataInserimento")
 	public ResponseEntity getClienteByDataInserimento(@RequestBody DataDTO dto, Pageable page) {
 		return ResponseEntity.ok(acquistoServ.getAcquistiByData(dto, page));
@@ -67,8 +68,8 @@ public class AcquistoController {
 	@Operation(summary = "Recupera gli Acquisti riferiti ad un Cliente", description = "")
 	@ApiResponse(responseCode = "200", description = "Clienti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Cliente trovato")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getAcquistiByUtente")
 	public ResponseEntity getAcquistiByUtente(Long id, Pageable page) {
 		return ResponseEntity.ok(acquistoServ.getAcquistiByUtente(id, page));
@@ -77,9 +78,9 @@ public class AcquistoController {
 	@Operation(summary = "inserisce un Acquisto nel sistema", description = "")
 	@ApiResponse(responseCode = "200", description = "Acquisto inserito correttamente")
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
-	@PostMapping
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/")
 	public ResponseEntity inserisciAcquisto(@Valid @RequestBody AcquistoDTO dto)
 			throws WrongInsertException, ElementNotAvaible, NotFoundException {
 		acquistoServ.insertAcquisto(dto);
@@ -90,9 +91,9 @@ public class AcquistoController {
 	@ApiResponse(responseCode = "200", description = "Acquisto modificato")
 	@ApiResponse(responseCode = "404", description = "Acquisto non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
-	@PutMapping
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/")
 	public ResponseEntity modificaAcquisto(@Valid @RequestBody UpdateAcquistoRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
 		acquistoServ.updateAcquisto(modificaDTO);
@@ -103,9 +104,9 @@ public class AcquistoController {
 	@ApiResponse(responseCode = "200", description = "Acquisto eliminato")
 	@ApiResponse(responseCode = "404", description = "Acquisto non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/{id}")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/eliminaacquisto/{id}")
 	public ResponseEntity eliminaAcquisto(@PathVariable Long id) throws NotFoundException {
 		acquistoServ.deleteAcquisto(id);
 		return ResponseEntity.ok("Acquisto eliminato");
