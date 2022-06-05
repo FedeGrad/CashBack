@@ -48,8 +48,8 @@ public class AcquistoController {
 	@Operation(summary = "Recupera tutti gli acquisti presenti nel sistema, paginati", description = "")
 	@ApiResponse(responseCode = "200", description = "Acquisti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Acquisto trovato")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getAcqusitiPage")
 	public ResponseEntity getAllAcqusiti(Pageable page) {
 		return ResponseEntity.ok(acquistoServ.getAcquistiPaginati(page));

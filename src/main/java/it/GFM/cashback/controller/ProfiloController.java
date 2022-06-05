@@ -34,8 +34,8 @@ public class ProfiloController {
 	@Operation(summary = "Recupera tutti i Profili presenti nel sistema")
 	@ApiResponse(responseCode = "200", description = "Profili trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Profilo trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/")
 	public ResponseEntity getAllProfili() {
 		return ResponseEntity.ok(profiloService.findAllProfili());
@@ -45,8 +45,8 @@ public class ProfiloController {
 	@Operation(summary = "Recupera tutti i Profili presenti nel sistema passando il nome del profilo a parametro")
 	@ApiResponse(responseCode = "200", description = "Profili trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Profilo trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getallprofilibynome/{nome}")
 	public ResponseEntity getAllProfiliByNome(@PathVariable ("nome") String nome ) throws NotFoundException {
 		return ResponseEntity.ok(profiloService.findAllProfiliByNome(nome));
@@ -56,8 +56,8 @@ public class ProfiloController {
 	@Operation(summary = "Recupera tutti i Profili presenti nel sistema passando il cognome del profilo a parametro")
 	@ApiResponse(responseCode = "200", description = "Profili trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Profilo trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getallprofilibycognome/{cognome}")
 	public ResponseEntity getAllProfiliByCognome(@PathVariable ("cognome") String cognome ) throws NotFoundException {
 		return ResponseEntity.ok(profiloService.findAllProfiliByCognome(cognome));
@@ -68,8 +68,8 @@ public class ProfiloController {
 	@Operation(summary = "inserisce un Profilo nel sistema")
 	@ApiResponse(responseCode = "200", description = "Profilo inserito correttamente")
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/")
 	public ResponseEntity inserisciProfilo(@Valid @RequestBody InsertProfiloRequestDTO  dto)
 			throws WrongInsertException,NotFoundException {
@@ -83,8 +83,8 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "200", description = "Profilo modificato")
 	@ApiResponse(responseCode = "404", description = "Profilo non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/")
 	public ResponseEntity modificaProfilo(@Valid @RequestBody UpdateProfiloRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
@@ -97,8 +97,8 @@ public class ProfiloController {
 	@ApiResponse(responseCode = "200", description = "Profilo eliminato")
 	@ApiResponse(responseCode = "404", description = "Profilo non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/eliminaprofilo/{id}")
 	public ResponseEntity eliminaProfilo(@PathVariable Long id) throws NotFoundException {
 		profiloService.deleteProfilo(id);

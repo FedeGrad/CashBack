@@ -35,8 +35,8 @@ public class PagamentoController {
 	@Operation(summary = "Recupera tutti i pagamenti presenti nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Pagamento trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/")
 	public ResponseEntity getAllPagamenti() {
 		return ResponseEntity.ok(pagamentoService.findAllPagamenti());
@@ -46,8 +46,8 @@ public class PagamentoController {
 	@Operation(summary = "inserisce un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento inserito correttamente")
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/")
 	public ResponseEntity inserisciPagamento(@Valid @RequestBody InsertPagamentoRequestDTO  dto)
 			throws WrongInsertException,NotFoundException {
@@ -61,8 +61,8 @@ public class PagamentoController {
 	@ApiResponse(responseCode = "200", description = "Pagamento modificato")
 	@ApiResponse(responseCode = "404", description = "Pagamento non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/")
 	public ResponseEntity modificaPagamento(@Valid @RequestBody UpdatePagamentoRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
@@ -76,8 +76,8 @@ public class PagamentoController {
 	@ApiResponse(responseCode = "200", description = "Pagamento eliminato")
 	@ApiResponse(responseCode = "404", description = "Pagamento non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/eliminapagamento/{id}")
 	public ResponseEntity eliminaPagamento(@PathVariable Long id) throws NotFoundException {
 		pagamentoService.deletePagamento(id);

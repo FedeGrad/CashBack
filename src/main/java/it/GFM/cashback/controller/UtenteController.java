@@ -36,8 +36,8 @@ public class UtenteController {
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/")
 	public ResponseEntity getAllUtenti() throws NotFoundException {
 		return ResponseEntity.ok(utenteService.findAllUtenti());
@@ -47,8 +47,8 @@ public class UtenteController {
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema passando l'username dell'Utente a parametro")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getallutentibyusername/{username}")
 	public ResponseEntity getAllUtentiByNomeUsername(@PathVariable ("username") String username ) throws NotFoundException {
 		return ResponseEntity.ok(utenteService.findUtenteUsername(username));
@@ -58,8 +58,8 @@ public class UtenteController {
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema passando l'ID dell'Utente a parametro")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
-//	@SecurityRequirement(name = "bearerAuth")
-//	@PreAuthorize("isAuthenticated()")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/getallutentibyid/{id}")
 	public ResponseEntity getAllUtentiById(@PathVariable ("id") Long id ) throws NotFoundException {
 		return ResponseEntity.ok(utenteService.findById(id));
@@ -68,8 +68,8 @@ public class UtenteController {
 	@Operation(summary = "inserisce un Utente nel sistema")
 	@ApiResponse(responseCode = "200", description = "Utente inserito correttamente")
 	@ApiResponse(responseCode = "500", description = "ERRORE nell'inserimento")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/")
 	public ResponseEntity inserisciUtente(@Valid @RequestBody InsertUtenteRequestDTO  dto)
 			throws WrongInsertException,NotFoundException, ElementAlreadyPresentException {
@@ -82,8 +82,8 @@ public class UtenteController {
 	@ApiResponse(responseCode = "200", description = "Utente modificato")
 	@ApiResponse(responseCode = "404", description = "Utente non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/")
 	public ResponseEntity modificaUtente(@Valid @RequestBody UpdateUtenteRequestDTO modificaDTO)
 			throws NotFoundException, WrongInsertException, ElementNotAvaible {
@@ -97,8 +97,8 @@ public class UtenteController {
 	@ApiResponse(responseCode = "200", description = "Utente eliminato")
 	@ApiResponse(responseCode = "404", description = "Utente non trovato")
 	@ApiResponse(responseCode = "500", description = "Errore modifica")
-	// @SecurityRequirement(name = "bearerAuth")
-	// @PreAuthorize("hasRole('ADMIN')")
+	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity eliminaUtente(@PathVariable Long id) throws NotFoundException {
 		utenteService.deleteUtente(id);
