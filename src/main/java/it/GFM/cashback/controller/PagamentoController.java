@@ -31,7 +31,6 @@ public class PagamentoController {
 	@Autowired
 	PagamentoService pagamentoService;
 	
-	
 	@Operation(summary = "Recupera tutti i pagamenti presenti nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Pagamento trovato")
@@ -41,7 +40,6 @@ public class PagamentoController {
 	public ResponseEntity getAllPagamenti() {
 		return ResponseEntity.ok(pagamentoService.findAllPagamenti());
 	}
-	
 	
 	@Operation(summary = "inserisce un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento inserito correttamente")
@@ -54,8 +52,6 @@ public class PagamentoController {
 		pagamentoService.insertPagamento(dto);
 		return ResponseEntity.ok("Pagamento inserito");
 	}
-	
-	
 	
 	@Operation(summary = "Modifica un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento modificato")
@@ -70,8 +66,6 @@ public class PagamentoController {
 		return ResponseEntity.ok("Pagamento modificato");
 	}
 	
-	
-	
 	@Operation(summary = "Elimina un Pagamento nel sistema")
 	@ApiResponse(responseCode = "200", description = "Pagamento eliminato")
 	@ApiResponse(responseCode = "404", description = "Pagamento non trovato")
@@ -83,7 +77,5 @@ public class PagamentoController {
 		pagamentoService.deletePagamento(id);
 		return ResponseEntity.ok("Pagamento eliminato");
 	}
-
-	
 	
 }

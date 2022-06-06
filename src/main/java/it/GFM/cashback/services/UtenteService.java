@@ -12,6 +12,7 @@ import it.GFM.cashback.dto.InsertUtenteRequestDTO;
 import it.GFM.cashback.dto.UpdateUtenteRequestDTO;
 import it.GFM.cashback.exception.ElementAlreadyPresentException;
 import it.GFM.cashback.exception.NotFoundException;
+import it.GFM.cashback.model.Pagamento;
 import it.GFM.cashback.model.Utente;
 import it.GFM.cashback.repository.UtenteRepository;
 
@@ -24,6 +25,7 @@ public class UtenteService {
 	public void insertUtente(InsertUtenteRequestDTO dto) throws ElementAlreadyPresentException {
 		if(!utenteRepository.existsByUsername(dto.getUsername())) {
 			Utente utente = new Utente();
+			Pagamento newPagamento = new Pagamento();
 			BeanUtils.copyProperties(dto, utente);
 			utente.setPassword(BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
 			utenteRepository.save(utente);

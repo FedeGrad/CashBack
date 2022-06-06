@@ -34,7 +34,6 @@ public class AcquistoController {
 	@Autowired
 	AcquistoService acquistoServ;
 	
-	
 	@Operation(summary = "Recupera tutti gli acquisti presenti nel sistema", description = "")
 	@ApiResponse(responseCode = "200", description = "Acquisti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Acquisto trovato")
