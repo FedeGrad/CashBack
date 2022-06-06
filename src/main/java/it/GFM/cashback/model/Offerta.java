@@ -41,7 +41,7 @@ public class Offerta {
 	@JoinColumn(name = "id_acquisto")
 	private Acquisto acquisto;
 	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(mappedBy = "offerte", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private List<Utente> utenti;
 
 }

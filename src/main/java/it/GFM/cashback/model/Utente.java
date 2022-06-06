@@ -44,7 +44,8 @@ public class Utente {
 	private List<Pagamento> pagamenti = new ArrayList<Pagamento>();
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "preferenze", joinColumns = @JoinColumn(name = "id_utente"), 
+	@JoinTable(name = "preferenze", 
+	joinColumns = @JoinColumn(name = "id_utente"), 
 	inverseJoinColumns = @JoinColumn(name = "id_offerta"))
 	private List<Offerta> offerte = new ArrayList<Offerta>();
 
