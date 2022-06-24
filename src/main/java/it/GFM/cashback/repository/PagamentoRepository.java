@@ -11,7 +11,9 @@ import it.GFM.cashback.model.Utente;
 
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	
-	@Query(value = "", nativeQuery = true)
+	@Query(value = "SELECT * FROM Pagamento "
+			+ "JOIN Utente ON Pagamento.id_utente = Utente.id"
+			+ "WHERE Utente.username = ?1", nativeQuery = true)
 	public List<Pagamento> findByUtente(String username);
 	public List<Pagamento> findByIban(String iban);
 	public boolean existsByIban(String iban);

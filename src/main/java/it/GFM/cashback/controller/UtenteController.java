@@ -32,7 +32,6 @@ public class UtenteController {
 	@Autowired
 	UtenteService utenteService;
 	
-	
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
@@ -43,7 +42,6 @@ public class UtenteController {
 		return ResponseEntity.ok(utenteService.findAllUtenti());
 	}
 	
-	
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema passando l'username dell'Utente a parametro")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
 	@ApiResponse(responseCode = "404", description = "Nessun Utente trovato")
@@ -53,7 +51,6 @@ public class UtenteController {
 	public ResponseEntity getAllUtentiByNomeUsername(@PathVariable ("username") String username ) throws NotFoundException {
 		return ResponseEntity.ok(utenteService.findUtenteUsername(username));
 	}
-	
 	
 	@Operation(summary = "Recupera tutti gli Utenti presenti nel sistema passando l'ID dell'Utente a parametro")
 	@ApiResponse(responseCode = "200", description = "Utenti trovati")
@@ -77,7 +74,6 @@ public class UtenteController {
 		return ResponseEntity.ok("Utente inserito");
 	}
 	
-	
 	@Operation(summary = "Modifica un Utente nel sistema")
 	@ApiResponse(responseCode = "200", description = "Utente modificato")
 	@ApiResponse(responseCode = "404", description = "Utente non trovato")
@@ -90,8 +86,6 @@ public class UtenteController {
 		utenteService.updateUtente(modificaDTO);
 		return ResponseEntity.ok("Utente modificato");
 	}
-	
-	
 
 	@Operation(summary = "Elimina un Utente nel sistema")
 	@ApiResponse(responseCode = "200", description = "Utente eliminato")
